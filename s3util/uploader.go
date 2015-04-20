@@ -85,10 +85,6 @@ func newUploader(url string, h http.Header, c *Config) (u *uploader, err error) 
 	}
 	u.bufsz = minPartSize
 	
-	if c.NoMultipart == nil {
-		c.NoMultipart = false
-	}
-	
 	r, err := http.NewRequest("PUT", url, nil)
 	if err != nil {
 		return nil, err
