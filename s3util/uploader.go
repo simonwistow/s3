@@ -3,7 +3,7 @@ package s3util
 import (
 	"bytes"
 	"encoding/xml"
-	"github.com/kr/s3"
+	"github.com/simonwistow/s3"
 	"fmt"
 	"io"
 	"net/http"
@@ -84,7 +84,12 @@ func newUploader(url string, h http.Header, c *Config) (u *uploader, err error) 
 		u.client = http.DefaultClient
 	}
 	u.bufsz = minPartSize
-	r, err := http.NewRequest("POST", url+"?uploads", nil)
+	
+	if c.NoMultipart == nil {
+		c.NoMultipart = false
+	}
+	
+	r, err := http.NewRequest("PUT", url, nil)
 	if err != nil {
 		return nil, err
 	}
